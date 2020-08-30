@@ -3,8 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var process = require('process');
+var mysql = require('mysql');
 
-var indexRouter = require('./routes/index');
+var productsRouter = require('./routes/products');
+var stadisticsRouter = require('./routes/stadistics');
+var env = process.env;
 
 var app = express();
 
@@ -19,7 +23,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// Database connections
+app.use(function(req, res, next){
+  res.locals.connection = mysql.createConnection({
+		host     : env.DB_HOST,
+		user     : env.DB_USER,
+		password : env.DB_PASS,
+		database : env.DB_NAME
+	});
+	res.locals.connection.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
+	next();
+})
+
+app.use('/api/v1/users', productsRouter);
+app.use('/api/v1/stadistics', stadisticsRouter);
 
 
 // catch 404 and forward to error handler
