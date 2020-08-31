@@ -5,8 +5,6 @@ var router = express.Router();
 router.post('/list', function(req, res, next) {
   const { keyword } = req.query;
 
-  console.log(`Esta es la busqueda ${keyword}`);
-
   const sqlQuery = `SELECT id, title FROM productos 
   WHERE title LIKE '%${keyword}%' LIMIT 50`;
 
@@ -18,10 +16,9 @@ router.post('/list', function(req, res, next) {
 
     res.locals.connection.query(sqlRegister, [valuesInsert], function (error, results, fields) {
       if (error) throw error;
-      console.log("Se insertaron los elementos");
     })
 
-		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
 });
 
