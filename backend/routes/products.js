@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/list', function(req, res, next) {
+/* POST search producto */
+router.post('/list', function(req, res, next) {
   const { keyword } = req.query;
 
   console.log(`Esta es la busqueda ${keyword}`);
