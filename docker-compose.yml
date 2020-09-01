@@ -13,3 +13,16 @@ services:
       - 3001:3001
     volumes:
       - ./backend/:/usr/src/app/
+
+  test_front:
+    image: test_front
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: yarn dev
+    env_file:
+      - ./frontend/.env
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/:/usr/src/app/
