@@ -43,7 +43,10 @@ export default function Stadistics({ ranking }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch('http://localhost:3001/api/v1/stadistics')
+  const port = process.env.PORT_BACKEND
+  const res = await fetch(`http://localhost:${port}/api/v1/stadistics`, {
+    method: 'GET',
+  })
   const ranking = await res.json()
 
   return {

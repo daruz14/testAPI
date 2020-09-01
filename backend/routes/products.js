@@ -13,10 +13,11 @@ router.post('/list', function(req, res, next) {
     // Query para registrar busqueda
     let sqlRegister = `INSERT INTO busquedas(id, producto_id, palabras) VALUES ?`;
     const valuesInsert = results.map(value => [null, value.id, keyword]);
-
-    res.locals.connection.query(sqlRegister, [valuesInsert], function (error, results, fields) {
-      if (error) throw error;
-    })
+    if (valuesInsert.length > 0 && keyword !== '') {
+      res.locals.connection.query(sqlRegister, [valuesInsert], function (error, results, fields) {
+        if (error) throw error;
+      })
+    }
 
     res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});

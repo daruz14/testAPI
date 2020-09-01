@@ -10,7 +10,8 @@ export default function Products() {
 
   const onFormSubmit = e => {
     e.preventDefault();
-    const baseUrl = `http://localhost:3001/api/v1/products/list?keyword=${search}`
+    const port = process.env.PORT_BACKEND
+    const baseUrl = `http://localhost:${port}/api/v1/products/list?keyword=${search}`
 
     fetch(baseUrl, {
         method: 'POST',
@@ -25,8 +26,8 @@ export default function Products() {
     setSearch(event.target.value)
   }
 
-  const productsResults = products.map(value => 
-    <div className={styles.card}>
+  const productsResults = products.map((value, index) => 
+    <div key={`product-${index}`} className={styles.card}>
       <h4>{value.title}</h4>
     </div>
   )
