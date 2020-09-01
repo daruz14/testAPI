@@ -73,7 +73,20 @@ Frontend:
 
 ## NOTA!
 
-Por alguna extraña razón, al querer probar la vista de `stadistics` en el frontend, el fetch con el backend tiraba un error de conexión, pero que no sucede en la vista `search`, ni tampoco cuando se ejecuta sin docker, no se pudo encontrar bien el error dado que reclamaba por una libreria :/ y no tenía más tiempo. Por lo mismo se recomienda probar las vistas levantando de forma manual sin docker el frontend. Para esto se puede levantar el servicio
+Por alguna extraña razón, al querer probar la vista de `stadistics` en el frontend, el fetch con el backend tiraba un error de conexión usando `localhost`, cambiando el url con `test_back`, ya que al usar docker se puede hacer la conexión asi entre los servicios. Pero que no sucede en la vista `search`, ni tampoco cuando se ejecuta sin docker, no se pudo encontrar bien el error dado que reclamaba por una libreria :/ y no tenía más tiempo. Por lo mismo si se va a levantar la aplicación sin docker, se debe modificar la linea `48 de stadistics.js` en el front:
+
+```js
+const res = await fetch(`http://test_back:${port}/api/v1/stadistics`, {
+    method: 'GET',
+  })
+```
+por
+```js
+const res = await fetch(`http://localhost:${port}/api/v1/stadistics`, {
+    method: 'GET',
+  })
+```
+Por lo mismo si se levantará sin docker, se recomienda probar las vistas levantando de forma manual sin docker el frontend. Para esto se puede levantar el servicio
 ```
 docker-compose up --build
 docker-compose stop test_front

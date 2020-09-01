@@ -44,7 +44,8 @@ export default function Stadistics({ ranking }) {
 
 export async function getStaticProps() {
   const port = process.env.PORT_BACKEND
-  const res = await fetch(`http://localhost:${port}/api/v1/stadistics`, {
+  // Si se probará sin docker usar localhost y no test_back
+  const res = await fetch(`http://test_back:${port}/api/v1/stadistics`, {
     method: 'GET',
   })
   const ranking = await res.json()
